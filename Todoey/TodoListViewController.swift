@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    let itemArray = ["Find Mike","Buy Eggos","Destroy Demogorgon"]
+    var itemArray = ["Find Mike","Buy Eggos","Destroy Demogorgon"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +30,8 @@ class TodoListViewController: UITableViewController {
         return cell
         
     }
+    
+    //MARK - TableView Delegate Methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
@@ -47,5 +49,41 @@ class TodoListViewController: UITableViewController {
         
     }
     
+    //MARK - Add new items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add new Todoey item", message: "here is a Message", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //what will happen once the user clicks the Add Item button on the IUalert
+            //print(textField.text)
+            //print("Success!")
+            
+            //TODO - add code to check if textfield is empty
+            self.itemArray.append(textField.text!)
+            
+            self.tableView.reloadData()
+            //Q: why does layoutIfNeeded not working?
+            //self.view.layoutIfNeeded()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true)
+        
+    }
+    
+    
+    
 }
+
+
 
